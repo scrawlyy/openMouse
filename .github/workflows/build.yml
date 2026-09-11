@@ -13,18 +13,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
 
       - name: Configure CMake
-        run: cmake -B build -G "Visual Studio 17 2022" -A x64
+        run: cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
 
-      - name: Build Release
-        run: cmake --build build --config Release
+      - name: Build
+        run: cmake --build build
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: openMouse-exe
-          path: build/Release/openmouse.exe
+          path: build/openmouse.exe
           if-no-files-found: error
